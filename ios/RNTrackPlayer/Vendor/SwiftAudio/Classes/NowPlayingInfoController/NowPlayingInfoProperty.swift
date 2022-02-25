@@ -31,7 +31,6 @@ public enum NowPlayingInfoProperty: NowPlayingInfoKeyValue {
      The URL pointing to the now playing item's underlying asset.
      This constant is used by the system UI when video thumbnails or audio waveform visualizations are applicable.
      */
-    @available(iOS 10.3, *)
     case assetUrl(URL?)
     
     /**
@@ -116,7 +115,6 @@ public enum NowPlayingInfoProperty: NowPlayingInfoKeyValue {
      The service provider associated with the now-playing item.
      Value is a unique NSString that identifies the service provider for the now-playing item. If the now-playing item belongs to a channel or subscription service, this key can be used to coordinate various types of now-playing content from the service provider.
      */
-    @available(iOS 11.0, *)
     case serviceIdentifier(String?)
     
     
@@ -130,11 +128,8 @@ public enum NowPlayingInfoProperty: NowPlayingInfoKeyValue {
             return MPNowPlayingInfoPropertyAvailableLanguageOptions
             
         case .assetUrl(_):
-            if #available(iOS 10.3, *) {
-                return MPNowPlayingInfoPropertyAssetURL
-            } else {
-                return ""
-            }
+            return ""
+
         case .chapterCount(_):
             return MPNowPlayingInfoPropertyChapterCount
             
@@ -175,12 +170,7 @@ public enum NowPlayingInfoProperty: NowPlayingInfoKeyValue {
             return MPNowPlayingInfoPropertyPlaybackRate
             
         case .serviceIdentifier(_):
-            if #available(iOS 11.0, *) {
-                return MPNowPlayingInfoPropertyServiceIdentifier
-            } else {
-                return ""
-            }
-            
+            return ""
         }
     }
     
@@ -193,10 +183,7 @@ public enum NowPlayingInfoProperty: NowPlayingInfoKeyValue {
         case .availableLanguageOptions(let options):
             return options
             
-        case .assetUrl(let url):
-            if #available(iOS 10.3, *) {
-                return url
-            }
+        case .assetUrl:
             return false
             
         case .chapterCount(let count):
