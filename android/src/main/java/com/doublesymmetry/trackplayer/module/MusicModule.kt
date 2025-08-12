@@ -178,7 +178,15 @@ class MusicModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaM
 
         val manager = LocalBroadcastManager.getInstance(context)
         eventHandler = MusicEvents(context)
-        manager.registerReceiver(eventHandler!!, IntentFilter(EVENT_INTENT))
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+          context.registerReceiver(
+              eventHandler!!, 
+              IntentFilter(EVENT_INTENT),
+              Context.RECEIVER_NOT_EXPORTED
+          )
+        } else {
+            manager.registerReceiver(eventHandler!!, IntentFilter(EVENT_INTENT))
+        }
 
         Intent(context, MusicService::class.java).also { intent ->
             context.startService(intent)
